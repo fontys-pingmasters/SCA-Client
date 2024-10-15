@@ -21,3 +21,19 @@ div {
   display: flex;
   justify-content: center;
 }
+
+.logo {
+  margin: 2rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
+
+}
+
+.whitebox {
+  background-color: white;
+  color: black;
+  border-radius: 1rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  justify-content: center;
+}
