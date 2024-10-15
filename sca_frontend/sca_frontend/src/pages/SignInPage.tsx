@@ -13,7 +13,7 @@ function SignInPage() {
 
                 {/* Form Section */}
                 <h2 className="text-2xl font-semibold text-black mb-2">Sign in</h2>
-                <p className="text-sm text-gray-500 mb-4">Sign in with your ping pong account.</p>
+                <p className="text-sm text-gray-500 mb-4">Sign in with your account.</p>
 
                 <form>
                     <input
@@ -40,14 +40,13 @@ function SignInPage() {
                         Continue
                     </button>
                 </form>
-
-                {/* Sign up link */}
-                <div className="text-center mt-6">
-                    <p className="text-xs text-gray-500">
-                        Don’t have a ping pong account?
-                        <a href="#" className="text-red-500 hover:underline">Create an account</a>
-                    </p>
-                </div>
+            </div>
+            {/* Sign up link */}
+            <div className="text-center mt-6">
+                <p className="text-xs text-white">
+                    Don’t have an account?
+                </p>
+                <a href="#" className="text-xs text-white underline">Create an account</a>
             </div>
         </div>
     );
