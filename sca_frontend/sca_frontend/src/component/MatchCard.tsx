@@ -6,18 +6,15 @@ interface MatchCardProps {
   points: number;
 }
 
-const MatchCard: React.FC<MatchCardProps> = ({ details, result, points }) => (
-  <div
-    className={`flex justify-between items-center bg-gray-700 p-3 mb-2 rounded border-l-4 ${
-      result === 'Win' ? 'border-green-500' : 'border-red-500'
-    }`}
-  >
-    <span>{details}</span>
-    <span>{result}</span>
-    <span className={`font-bold ${points >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-      {points >= 0 ? `+${points}` : points}
-    </span>
-  </div>
-);
+const MatchCard: React.FC<MatchCardProps> = ({ details, result, points }) => {
+  return (
+    <div className="flex justify-between items-center w-full p-2 bg-black rounded text-white">
+      <span>{details}</span>
+      <span className={`text-${points >= 0 ? 'green-500' : 'red-500'}`}>
+        {result} {points > 0 ? `+${points}` : points}
+      </span>
+    </div>
+  );
+};
 
 export default MatchCard;

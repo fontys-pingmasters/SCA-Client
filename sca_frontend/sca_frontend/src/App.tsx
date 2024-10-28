@@ -8,8 +8,6 @@ import SignUpPage from './pages/SignUpPage'
 import Homepage from './pages/HomePage';
 
 function App() {
-
-
   return (
     <>
     <Router>
