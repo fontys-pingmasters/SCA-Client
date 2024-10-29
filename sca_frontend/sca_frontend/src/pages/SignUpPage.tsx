@@ -34,6 +34,12 @@ function SignUpPage() {
             </button>
           </form>
         </div>
+        <div className="text-center mt-6">
+                    <p className="text-xs text-white">
+                        Already have an account?
+                    </p>
+                    <a href="#" className="text-xs text-white underline">Sign in</a>
+                </div>
       </div>
     </div>
   );
