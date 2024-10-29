@@ -10,7 +10,7 @@ function SignUpPage() {
           <div className="flex justify-center items-center">
             <img src={mediaanConclusionLogo} alt="alternate text" />
           </div>
-          <h2 className="text-2xl font-semibold text-black mb-2">Sign up</h2>
+          <h2 className="text-2xl font-semibold text-black mt-2">Sign up</h2>
           <p className="text-sm text-gray-500 mb-4">Create your account.</p>
           <form>
             <input

@@ -46,7 +46,7 @@ function SignInPage() {
                     <div className="flex justify-center items-center">
                         <img src={mediaanConclusionLogo} alt="alternate text" />
                     </div>
-                    <h2 className="text-2xl font-semibold text-black mb-2">Sign in</h2>
+                    <h2 className="text-2xl font-semibold text-black mt-2">Sign in</h2>
                     <p className="text-sm text-gray-500 mb-4">Sign in with your account.</p>
                     <form onSubmit={handleSubmit}>
                         <input
