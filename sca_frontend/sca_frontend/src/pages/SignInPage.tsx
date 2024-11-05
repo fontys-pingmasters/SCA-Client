@@ -62,22 +62,22 @@ function SignInPage() {
                             placeholder="Password"
                             className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
                         <div className="flex justify-center mb-4">
-                            <a href="#" className="text-xs text-black underline">
-                                Forgot password?
-                            </a>
+                            <Link to="/forgot-password" className="text-xs text-black underline">Forgot Password?</Link>
                         </div>
-                        <button
-                            type="submit"
-                            className="w-full p-2 rounded-md bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold">
-                            Continue
-                        </button>
+                        <Link to="/home">
+                            <button
+                                type="submit"
+                                className="w-full p-2 rounded-md bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold">
+                                Continue
+                            </button>
+                        </Link>
                     </form>
                 </div>
                 <div className="text-center mt-6">
                     <p className="text-xs text-white">
                         Don’t have an account?
                     </p>
-                    <a href="#" className="text-xs text-white underline">Create an account</a>
+                    <Link to="/sign-up" className="text-xs text-white underline">Create an account</Link>
                 </div>
             </div>
         </div>

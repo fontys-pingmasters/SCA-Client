@@ -27,19 +27,21 @@ function SignUpPage() {
                 placeholder="Confirm password"
                 className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
             </div>
-            <button
-              type="submit"
-              className="w-full p-2 rounded-md bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold">
-              Continue
-            </button>
+            <Link to="/">
+              <button
+                type="submit"
+                className="w-full p-2 rounded-md bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold">
+                Continue
+              </button>
+            </Link>
           </form>
         </div>
         <div className="text-center mt-6">
-                    <p className="text-xs text-white">
-                        Already have an account?
-                    </p>
-                    <a href="#" className="text-xs text-white underline">Sign in</a>
-                </div>
+          <p className="text-xs text-white">
+            Already have an account?
+          </p>
+          <Link to="/" className="text-xs text-white underline">Sign in</Link>
+        </div>
       </div>
     </div>
   );
