@@ -32,10 +32,10 @@ function SignInPage() {
             const data = await response.json();
             localStorage.setItem("token", data);
             console.log(data);
-            navigate("/homepage")
+            navigate("/home")
         } catch (error) {
             console.error("Error during login: ", error)
-            navigate("/login");
+            navigate("/sign-in");
         }
     }
 
@@ -64,13 +64,11 @@ function SignInPage() {
                         <div className="flex justify-center mb-4">
                             <Link to="/forgot-password" className="text-xs text-black underline">Forgot Password?</Link>
                         </div>
-                        <Link to="/home">
                             <button
                                 type="submit"
                                 className="w-full p-2 rounded-md bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold">
                                 Continue
                             </button>
-                        </Link>
                     </form>
                 </div>
                 <div className="text-center mt-6">
