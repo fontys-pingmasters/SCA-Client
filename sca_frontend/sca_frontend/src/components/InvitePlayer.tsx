@@ -13,15 +13,15 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ onInvite, className }) => {
   };
 
   return (
-    <div className={`flex flex-col items-center ${className}`}>
-      <h3 className="text-lg font-semibold mb-2">Invite Player</h3>
-      <div className="flex items-center w-full">
+    <div className={`flex flex-col ${className}`}>
+      <h3 className="text-lg font-bold mb-2 text-black">Invite Player</h3>
+      <div className="flex items-center w-full drop-shadow-lg">
         <input
           type="text"
-          placeholder="Opponent username"
+          placeholder="Opponent's name"
           value={opponent}
           onChange={(e) => setOpponent(e.target.value)}
-          className="flex-1 p-2 rounded-l-lg border border-gray-300"
+          className="flex-1 p-2 rounded-l-lg"
         />
         <button
           onClick={handleInvite}
