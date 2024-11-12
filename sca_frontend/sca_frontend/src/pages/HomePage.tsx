@@ -13,8 +13,18 @@ const Homepage: React.FC = () => {
     { details: 'You 13 - 11 Cliff', result: 'Win' as 'Win', points: 20 },
   ];
 
-  const handleInvite = (opponent: string) => {
-    console.log(`Invited ${opponent}`);
+  const sampleUsers = [
+    { firstName: 'John', lastName: 'Smith', id: 1 },
+    { firstName: 'Jane', lastName: 'Doe', id: 2 },
+    { firstName: 'Sam', lastName: 'Johnson', id: 3 },
+    { firstName: 'Chris', lastName: 'Lee', id: 4 },
+  ];
+
+  const handleInvite = (opponentId: number) => {
+    const invitedUser = sampleUsers.find(user => user.id === opponentId);
+    if (invitedUser) {
+      console.log(`Invited ${invitedUser.firstName} ${invitedUser.lastName}`);
+    }
   };
 
   return (
@@ -24,7 +34,11 @@ const Homepage: React.FC = () => {
           <ProfileHeader className="drop-shadow-lg w-full max-w-sm" username="Erdem" elo={1300} />
         </div>
 
-        <InvitePlayer className="w-full max-w-sm mb-4" onInvite={handleInvite} />
+        <InvitePlayer
+          className="w-full max-w-sm mb-4"
+          onInvite={handleInvite}
+          users={sampleUsers} 
+        />
         <SpectateMatches className="w-full max-w-sm mb-4" />
         <MatchHistory className="w-full max-w-sm" matches={matches} />
 
