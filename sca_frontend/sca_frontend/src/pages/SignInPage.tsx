@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom'
-import mediaanConclusionLogo from '/mediaan_conclusion_logo.png'
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import mediaanConclusionLogo from '/mediaan_conclusion_logo.png';
 
 function SignInPage() {
     const [email, setEmail] = useState("");
@@ -14,7 +16,7 @@ function SignInPage() {
 
     const loginRequest = async () => {
         try {
-            const response = await fetch("https://localhost:7035/Auth/login", {
+            const response = await fetch("http://localhost:5008/Auth/login", {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
@@ -26,25 +28,28 @@ function SignInPage() {
             });
 
             if (response.status === 401) {
+                toast.error("Invalid credentials. Please try again.");
                 return;
             }
 
             const data = await response.json();
             localStorage.setItem("token", data);
             console.log(data);
-            navigate("/home")
+            toast.success("Login successful!");
+            navigate("/home");
         } catch (error) {
-            console.error("Error during login: ", error)
-            navigate("/sign-in");
+            toast.error("An error occurred during login. Please try again later.");
+            console.error("Error during login: ", error);
         }
-    }
+    };
 
     return (
         <div className="flex items-center justify-center min-h-screen">
+            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
             <div>
                 <div className="bg-white p-8 rounded-lg shadow-lg w-80">
                     <div className="flex justify-center items-center">
-                        <img src={mediaanConclusionLogo} alt="alternate text" />
+                        <img src={mediaanConclusionLogo} alt="Logo" />
                     </div>
                     <h2 className="text-2xl font-semibold text-black mt-2">Sign in</h2>
                     <p className="text-sm text-gray-500 mb-4">Sign in with your account.</p>
@@ -54,21 +59,23 @@ function SignInPage() {
                             onChange={(e) => setEmail(e.target.value)}
                             type="email"
                             placeholder="Email"
-                            className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+                            className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                        />
                         <input
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             type="password"
                             placeholder="Password"
-                            className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+                            className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                        />
                         <div className="flex justify-center mb-4">
                             <Link to="/forgot-password" className="text-xs text-black underline">Forgot Password?</Link>
                         </div>
-                            <button
-                                type="submit"
-                                className="w-full p-2 rounded-md bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold">
-                                Continue
-                            </button>
+                        <button
+                            type="submit"
+                            className="w-full p-2 rounded-md bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold">
+                            Continue
+                        </button>
                     </form>
                 </div>
                 <div className="text-center mt-6">
