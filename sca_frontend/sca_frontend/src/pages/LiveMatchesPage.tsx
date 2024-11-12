@@ -1,30 +1,35 @@
+// LiveMatchesPage.tsx
 import React from 'react';
-import LiveMatchCard from '../component/LiveMatchCard';
+import { useNavigate } from 'react-router-dom';
 
-const LiveMatches: React.FC = () => {
+const LiveMatchesPage: React.FC = () => {
+  const navigate = useNavigate();
+
   const matches = [
-    { player1: 'Erdem', score1: 0, player2: 'Thomas', score2: 0 },
-    { player1: 'Ties', score1: 4, player2: 'Sjors', score2: 6 },
-    { player1: 'Cliff', score1: 9, player2: 'Thijs', score2: 7 },
+    { title: 'Erdem - Thomas', score: '0 - 0' },
+    { title: 'Ties - Sjors', score: '4 - 6' },
+    { title: 'Cliff - Thijs', score: '9 - 7' },
   ];
 
+  const openScoreboard = (match: { title: string; score: string }) => {
+    navigate('/scoreboard', { state: { matchTitle: match.title, score: match.score } });
+  };
+
   return (
-    <div className="p-4">
-      <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-2 rounded-lg">
-        Live Matches
-      </div>
+    <div className="live-matches-page p-4">
+      <h1 className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-2 rounded-lg">Live Matches</h1>
       {matches.map((match, index) => (
-        <LiveMatchCard
+        <div
           key={index}
-          player1={match.player1}
-          score1={match.score1}
-          player2={match.player2}
-          score2={match.score2}
-        />
+          className="bg-black text-white rounded-lg p-4 mb-2 cursor-pointer"
+          onClick={() => openScoreboard(match)}
+        >
+          <span className="mr-2 text-red-500">🔴</span>
+          {match.title}
+        </div>
       ))}
     </div>
   );
 };
 
-export default LiveMatches;
-
+export default LiveMatchesPage;

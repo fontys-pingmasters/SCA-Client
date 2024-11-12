@@ -6,7 +6,8 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import Homepage from './pages/HomePage';
-import LiveMatchesPage from './pages/LiveMatchesPage'; // Import the LiveMatchesPage
+import LiveMatchesPage from './pages/LiveMatchesPage';
+import ScoreboardPage from './pages/ScoreboardPage';
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/homepage" element={<Homepage />} />
-        <Route path="/live-matches" element={<LiveMatchesPage />} /> {/* New Route */}
+        <Route path="/live-matches" element={<LiveMatchesPage />} />
+        <Route path="/scoreboard" element={<ScoreboardPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
