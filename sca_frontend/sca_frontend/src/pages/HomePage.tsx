@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ProfileHeader from '../components/ProfileHeader';
 import InvitePlayer from '../components/InvitePlayer';
 import MatchHistory from '../components/MatchHistory';
 import SpectateMatches from '../components/SpectateMatches';
 
 const Homepage: React.FC = () => {
+  const [users, setUsers] = useState([]);
+
   const matches = [
     { details: 'You 11 - 5 Thomas', result: 'Win' as 'Win', points: 100 },
     { details: 'You 11 - 4 Sjors', result: 'Win' as 'Win', points: 50 },
@@ -20,7 +22,42 @@ const Homepage: React.FC = () => {
     { firstName: 'Chris', lastName: 'Lee', id: 4 },
   ];
 
-  const handleInvite = (opponentId: number) => {
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("https://localhost:7035/User");
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch users.");
+      }
+
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleInvite = async (opponentId: number) => {
+
+    try {
+      const response = await fetch(
+        "https://localhost:7035/Match",
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(opponentId),
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to send invite.");
+    } catch (error) {
+
+    }
+
     const invitedUser = sampleUsers.find(user => user.id === opponentId);
     if (invitedUser) {
       console.log(`Invited ${invitedUser.firstName} ${invitedUser.lastName}`);
@@ -37,7 +74,7 @@ const Homepage: React.FC = () => {
         <InvitePlayer
           className="w-full max-w-sm mb-4"
           onInvite={handleInvite}
-          users={sampleUsers} 
+          users={users} 
         />
         <SpectateMatches className="w-full max-w-sm mb-4" />
         <MatchHistory className="w-full max-w-sm" matches={matches} />
