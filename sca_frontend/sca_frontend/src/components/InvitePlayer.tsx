@@ -57,7 +57,7 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ onInvite, className, users 
           placeholder="Search opponent"
           value={searchInput}
           onChange={handleSearchChange}
-          className="flex-1 p-2 rounded-l-lg border border-gray-300"
+          className="flex-1 p-2 rounded-l-lg border text-slate-900 border-gray-300"
         />
         <button
           onClick={handleInvite}
