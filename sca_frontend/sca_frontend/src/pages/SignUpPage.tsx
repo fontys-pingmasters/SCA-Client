@@ -26,7 +26,7 @@ function SignUpPage() {
 
   const registerRequest = async () => {
     try {
-      const response = await fetch("http://localhost:5008/Auth/register", {
+      const response = await fetch("https://localhost:7035/Auth/register", {
         method: "POST",
         headers: {
           "content-type": "application/json",
