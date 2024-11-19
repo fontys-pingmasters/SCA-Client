@@ -8,6 +8,7 @@ import SignUpPage from './pages/SignUpPage';
 import Homepage from './pages/HomePage';
 import LiveMatchesPage from './pages/LiveMatchesPage';
 import ScoreboardPage from './pages/ScoreboardPage';
+import UpdateScorePage from './pages/UpdateScorePage';
 
 import HomePage from './pages/HomePage'
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/home" element={<Homepage />} />
         <Route path="/live-matches" element={<LiveMatchesPage />} />
         <Route path="/scoreboard" element={<ScoreboardPage />} />
+        <Route path="/update-score/:matchId" element={<UpdateScorePage />} />
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/home" element={HomePage} />
       </Routes>
