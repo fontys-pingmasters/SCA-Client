@@ -8,18 +8,18 @@ const Homepage: React.FC = () => {
   const [users, setUsers] = useState([]);
 
   const matches = [
-    { details: 'You 11 - 5 Thomas', result: 'Win' as 'Win', points: 100 },
-    { details: 'You 11 - 4 Sjors', result: 'Win' as 'Win', points: 50 },
-    { details: 'You 11 - 3 Mika', result: 'Win' as 'Win', points: 30 },
-    { details: 'You 1 - 11 Allert', result: 'Loss' as 'Loss', points: -50 },
-    { details: 'You 13 - 11 Cliff', result: 'Win' as 'Win', points: 20 },
+    { details: 'You 11 - 5 Thomas', result: 'Win' as 'Win', points: 100 }, // dont forget to remove hardcode
+    { details: 'You 11 - 4 Sjors', result: 'Win' as 'Win', points: 50 }, // dont forget to remove hardcode
+    { details: 'You 11 - 3 Mika', result: 'Win' as 'Win', points: 30 }, // dont forget to remove hardcode
+    { details: 'You 1 - 11 Allert', result: 'Loss' as 'Loss', points: -50 }, // dont forget to remove hardcode
+    { details: 'You 13 - 11 Cliff', result: 'Win' as 'Win', points: 20 }, // dont forget to remove hardcode
   ];
 
   const sampleUsers = [
-    { firstName: 'John', lastName: 'Smith', id: 1 },
-    { firstName: 'Jane', lastName: 'Doe', id: 2 },
-    { firstName: 'Sam', lastName: 'Johnson', id: 3 },
-    { firstName: 'Chris', lastName: 'Lee', id: 4 },
+    { firstName: 'John', lastName: 'Smith', id: 1 }, // dont forget to remove hardcode
+    { firstName: 'Jane', lastName: 'Doe', id: 2 }, // dont forget to remove hardcode
+    { firstName: 'Sam', lastName: 'Johnson', id: 3 }, // dont forget to remove hardcode
+    { firstName: 'Chris', lastName: 'Lee', id: 4 }, // dont forget to remove hardcode
   ];
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const Homepage: React.FC = () => {
         {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: `{"opponent1Id" : ${opponentId}}`, //< error here, JSON object not satisfied json object looks like {opponentId} instead of { "opponent1Id": opponentId }
+          body: `{"opponent1Id" : ${opponentId}}`, // !use proper struct instead of hardcoded quickfix
         }
       );
 
@@ -68,7 +68,7 @@ const Homepage: React.FC = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="w-80 bg-white rounded-lg shadow-md p-4 flex flex-col items-center relative">
         <div className="w-full -mt-10 mb-4">
-          <ProfileHeader className="drop-shadow-lg w-full max-w-sm" username="Erdem" elo={1300} />
+          <ProfileHeader className="drop-shadow-lg w-full max-w-sm" username="Erdem" elo={1300} /> {/* remove hardcode, also wrong datastructure */}
         </div>
 
         <InvitePlayer
@@ -80,9 +80,9 @@ const Homepage: React.FC = () => {
         <MatchHistory className="w-full max-w-sm" matches={matches} />
 
         <div className="w-full bottom-0 flex justify-between pt-5">
-          <div className="text-gray-700 text-4xl">📊</div>
-          <div className="text-orange-500 text-4xl">🏠</div>
-          <div className="text-gray-700 text-4xl">👤</div>
+          <div className="text-gray-700 text-4xl">📊 {/* Use icons instead of emojis */}</div>
+          <div className="text-orange-500 text-4xl">🏠 {/* Use icons instead of emojis */}</div>
+          <div className="text-gray-700 text-4xl">👤 {/* Use icons instead of emojis */}</div>
         </div>
       </div>
     </div>

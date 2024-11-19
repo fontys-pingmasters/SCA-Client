@@ -5,11 +5,11 @@ import "react-toastify/dist/ReactToastify.css";
 import mediaanConclusionLogo from '/mediaan_conclusion_logo.png';
 
 function SignUpPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState(""); //Interface
+  const [password, setPassword] = useState(""); //Interface
+  const [confirmPassword, setConfirmPassword] = useState(""); //Interface
+  const [firstName, setFirstName] = useState(""); //Interface
+  const [lastName, setLastName] = useState(""); //Interface
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -36,7 +36,7 @@ function SignUpPage() {
           lastName: lastName,
           email: email,
           password: password,
-          confirmPassword: confirmPassword,
+          confirmPassword: confirmPassword, // use interface
         }),
       });
 

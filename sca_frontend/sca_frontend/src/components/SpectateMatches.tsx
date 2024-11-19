@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface SpectateMatchesProps {
-  className?: string;
+  className?: string; //seems weird but is correct for importing styling through page above. however, what does importing styling add in this case case? we're not making a component library
 }
 
 const SpectateMatches: React.FC<SpectateMatchesProps> = ({ className }) => {

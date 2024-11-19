@@ -4,12 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 const UpdateScorePage: React.FC = () => {
   const navigate = useNavigate();
   const { matchId } = useParams<{ matchId: string }>(); // Retrieve matchId from URL parameters
-  const [scorePlayer1, setScorePlayer1] = useState(0);
-  const [scorePlayer2, setScorePlayer2] = useState(0);
-  const [matchTitle, setMatchTitle] = useState('');
-  const [creatorId, setCreatorId] = useState(0);
+  const [scorePlayer1, setScorePlayer1] = useState(0); //interface
+  const [scorePlayer2, setScorePlayer2] = useState(0); //interface
+  const [matchTitle, setMatchTitle] = useState(''); //interface
+  const [creatorId, setCreatorId] = useState(0); //interface
 
-  const [matchDetails, setMatchDetails] = useState<any>(null);
+  const [matchDetails, setMatchDetails] = useState<any>(null); //<<interface here
 
   // Fetch match details on component mount
   useEffect(() => {
@@ -19,7 +19,7 @@ const UpdateScorePage: React.FC = () => {
   const fetchMatchDetails = async () => {
     try {
       const response = await fetch(`https://localhost:7035/Match/${matchId}`);
-      if (!response.ok) throw new Error('Failed to fetch match details.');
+      if (!response.ok) throw new Error('Failed to fetch match details.'); //catch
 
       const data = await response.json();
       setMatchDetails(data);
@@ -34,10 +34,10 @@ const UpdateScorePage: React.FC = () => {
     }
   };
 
-  const incrementScorePlayer1 = () => setScorePlayer1(scorePlayer1 + 1);
-  const incrementScorePlayer2 = () => setScorePlayer2(scorePlayer2 + 1);
-  const decrementScorePlayer1 = () => setScorePlayer1(Math.max(scorePlayer1 - 1, 0));
-  const decrementScorePlayer2 = () => setScorePlayer2(Math.max(scorePlayer2 - 1, 0));
+  const incrementScorePlayer1 = () => setScorePlayer1(scorePlayer1 + 1); // what is this?
+  const incrementScorePlayer2 = () => setScorePlayer2(scorePlayer2 + 1); // what is this?
+  const decrementScorePlayer1 = () => setScorePlayer1(Math.max(scorePlayer1 - 1, 0)); // what is this?
+  const decrementScorePlayer2 = () => setScorePlayer2(Math.max(scorePlayer2 - 1, 0)); // what is this?
 
   const handleSubmit = async () => {
     try {
@@ -48,9 +48,9 @@ const UpdateScorePage: React.FC = () => {
         },
         body: JSON.stringify({
           MatchId: parseInt(matchId || '0'), // Ensure matchId is a number
-          CreatorId: creatorId,
-          PlayerScore: scorePlayer1,
-          OpponentScore: scorePlayer2,
+          CreatorId: creatorId, //use interface
+          PlayerScore: scorePlayer1, //use interface
+          OpponentScore: scorePlayer2, //use interface
         }),
       });
 
@@ -58,10 +58,10 @@ const UpdateScorePage: React.FC = () => {
         throw new Error("Failed to update match.");
       }
 
-      alert("Match updated successfully!");
+      alert("Match updated successfully!"); // alert is a depricated function, use another print method instead, depricated functions are considered insecure
       navigate('/live-matches'); // Navigate back to the live matches page after successful update
     } catch (error) {
-      alert("Failed to update match. Please try again.");
+      alert("Failed to update match. Please try again."); // alert is a depricated function, use another print method instead, depricated functions are considered insecure
       console.error('Error updating match:', error);
     }
   };
@@ -76,8 +76,8 @@ const UpdateScorePage: React.FC = () => {
           <button
             onClick={() => navigate('/live-matches')}
             className="text-red-500 hover:text-red-700"
-          >
-            ❌
+          > 
+            ❌ {/* Use icons instead of emojis */}
           </button>
         </div>
 
@@ -88,13 +88,13 @@ const UpdateScorePage: React.FC = () => {
         <div className="flex justify-around mb-4">
           <div className="text-center">
             <button
-              onClick={incrementScorePlayer1}
+              onClick={incrementScorePlayer1} // see function
               className="bg-green-500 text-white px-4 py-2 rounded mb-2"
             >
               +1
             </button>
             <button
-              onClick={decrementScorePlayer1}
+              onClick={decrementScorePlayer1} // see function
               className="bg-red-500 text-white px-4 py-2 rounded"
             >
               -1
@@ -102,13 +102,13 @@ const UpdateScorePage: React.FC = () => {
           </div>
           <div className="text-center">
             <button
-              onClick={incrementScorePlayer2}
+              onClick={incrementScorePlayer2} // see function
               className="bg-green-500 text-white px-4 py-2 rounded mb-2"
             >
               +1
             </button>
             <button
-              onClick={decrementScorePlayer2}
+              onClick={decrementScorePlayer2} // see function
               className="bg-red-500 text-white px-4 py-2 rounded"
             >
               -1

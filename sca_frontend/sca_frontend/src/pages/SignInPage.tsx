@@ -5,9 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 import mediaanConclusionLogo from '/mediaan_conclusion_logo.png';
 
 function SignInPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
+    const [email, setEmail] = useState(""); //Interface
+    const [password, setPassword] = useState(""); //Interface
+    const navigate = useNavigate(); //Interface
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -23,7 +23,7 @@ function SignInPage() {
                 },
                 body: JSON.stringify({
                     email: email,
-                    password: password,
+                    password: password, //use interface instead
                 }),
             });
 

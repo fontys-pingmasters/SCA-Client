@@ -10,8 +10,6 @@ import LiveMatchesPage from './pages/LiveMatchesPage';
 import ScoreboardPage from './pages/ScoreboardPage';
 import UpdateScorePage from './pages/UpdateScorePage';
 
-import HomePage from './pages/HomePage'
-
 function App() {
   return (
     <Router>
@@ -25,7 +23,6 @@ function App() {
         <Route path="/scoreboard" element={<ScoreboardPage />} />
         <Route path="/update-score/:matchId" element={<UpdateScorePage />} />
         <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/home" element={HomePage} />
       </Routes>
     </Router>
   );

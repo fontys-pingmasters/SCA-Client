@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface MatchCardProps {
-  details: string;
+  details: string; // maybe rename to be less ambiguous
   result: 'Win' | 'Loss';
   points: number;
 }
