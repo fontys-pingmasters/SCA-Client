@@ -49,7 +49,7 @@ const Homepage: React.FC = () => {
         {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify(opponentId), //< error here, JSON object not satisfied json object looks like {opponentId} instead of { "opponent1Id": opponentId }
+          body: `{opponent1Id: ${opponentId}}`, //< error here, JSON object not satisfied json object looks like {opponentId} instead of { "opponent1Id": opponentId }
         }
       );
 
