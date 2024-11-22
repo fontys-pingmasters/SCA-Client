@@ -9,7 +9,7 @@ const UpdateScorePage: React.FC = () => {
   const [matchTitle, setMatchTitle] = useState(''); //interface
   const [creatorId, setCreatorId] = useState(0); //interface
 
-  const [matchDetails, setMatchDetails] = useState<any>(null); //<<interface here
+  const [setMatchDetails] = useState<any>(null); //<<interface here
 
   // Fetch match details on component mount
   useEffect(() => {

@@ -1,7 +1,7 @@
-FROM node:lts-alpine AS build-stage
+FROM node:alpine3.20 AS build-stage
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm install --force --loglevel verbose
 COPY . .
 RUN npm run build
 
