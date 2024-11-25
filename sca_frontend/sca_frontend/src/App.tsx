@@ -9,22 +9,31 @@ import Homepage from './pages/HomePage';
 import LiveMatchesPage from './pages/LiveMatchesPage';
 import ScoreboardPage from './pages/ScoreboardPage';
 import UpdateScorePage from './pages/UpdateScorePage';
+import { AuthProvider } from './components/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<SignInPage />} />
-        <Route path="/change-password" element={<ChangePasswordPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/sign-up" element={<SignUpPage />} />
-        <Route path="/home" element={<Homepage />} />
-        <Route path="/live-matches" element={<LiveMatchesPage />} />
-        <Route path="/scoreboard" element={<ScoreboardPage />} />
-        <Route path="/update-score/:matchId" element={<UpdateScorePage />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<SignInPage />} />
+          <Route path="/change-password" element={<ChangePasswordPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
+
+          {/* Protected routes */}
+          <Route path="/home" element={<ProtectedRoute><Homepage /></ProtectedRoute>} />
+          <Route path="/live-matches" element={<ProtectedRoute><LiveMatchesPage /></ProtectedRoute>} />
+          <Route path="/scoreboard" element={<ProtectedRoute><ScoreboardPage /></ProtectedRoute>} />
+          <Route path="/update-score/:matchId" element={<ProtectedRoute><UpdateScorePage /></ProtectedRoute>} />
+
+          {/* Unmatched routes */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

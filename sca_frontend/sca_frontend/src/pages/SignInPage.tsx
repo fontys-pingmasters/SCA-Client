@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { useAuth } from "../components/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 import mediaanConclusionLogo from '/mediaan_conclusion_logo.png';
 
 function SignInPage() {
-    const [email, setEmail] = useState(""); //Interface
-    const [password, setPassword] = useState(""); //Interface
+    const [email, setEmail] = useState<string>(""); //Interface
+    const [password, setPassword] = useState<string>(""); //Interface
     const navigate = useNavigate(); //Interface
+    const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -32,8 +34,8 @@ function SignInPage() {
                 return;
             }
 
-            const data = await response.json();
-            localStorage.setItem("token", data);
+            const data: { token: string } = await response.json();
+            login(data.token);
             console.log(data);
             toast.success("Login successful!");
             navigate("/home");
