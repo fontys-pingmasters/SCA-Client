@@ -1,6 +1,7 @@
 // LiveMatchesPage.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BsFillCircleFill } from "react-icons/bs";
 
 const LiveMatchesPage: React.FC = () => {
   const navigate = useNavigate();
@@ -17,14 +18,19 @@ const LiveMatchesPage: React.FC = () => {
 
   return (
     <div className="live-matches-page p-4">
-      <h1 className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-2 rounded-lg">Live Matches</h1>
-      {matches.map((match, index) => ( // Cool inline function use! akin to vuejs v-for use
+      <h1 className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-2 rounded-lg">
+        Live Matches
+      </h1>
+      {matches.map((match, index) => (
         <div
           key={index}
           className="bg-black text-white rounded-lg p-4 mb-2 cursor-pointer"
           onClick={() => openScoreboard(match)}
         >
-          <span className="mr-2 text-red-500">🔴 {/* Use icons instead of emojis */}</span>
+          <BsFillCircleFill
+            className="text-red-500 inline-block mr-2"
+            size={14}
+          />
           {match.title}
         </div>
       ))}
