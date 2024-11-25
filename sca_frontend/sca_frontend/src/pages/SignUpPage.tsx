@@ -1,22 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import mediaanConclusionLogo from '/mediaan_conclusion_logo.png';
 
+interface UserForm {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  firstName: string;
+  lastName: string;
+}
+
 function SignUpPage() {
-  const [email, setEmail] = useState(""); //Interface
-  const [password, setPassword] = useState(""); //Interface
-  const [confirmPassword, setConfirmPassword] = useState(""); //Interface
-  const [firstName, setFirstName] = useState(""); //Interface
-  const [lastName, setLastName] = useState(""); //Interface
+  const [form, setForm] = useState<UserForm>({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    firstName: "",
+    lastName: "",
+  });
+
   const navigate = useNavigate();
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const handleChange = (field: keyof UserForm, value: string) => {
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+
+    debounceTimeout.current = setTimeout(() => {
+      setForm((prev) => ({ ...prev, [field]: value }));
+    }, 300);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Check if passwords match
-    if (password !== confirmPassword) {
+    if (form.password !== form.confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
@@ -31,13 +52,7 @@ function SignUpPage() {
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-          confirmPassword: confirmPassword, // use interface
-        }),
+        body: JSON.stringify(form),
       });
 
       if (response.status === 401) {
@@ -68,23 +83,23 @@ function SignUpPage() {
           <p className="text-sm text-gray-500 mb-4">Create your account.</p>
           <form onSubmit={handleSubmit}>
             <input
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              value={form.firstName}
+              onChange={(e) => handleChange("firstName", e.target.value)}
               type="text"
               placeholder="First Name"
               className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
             />
             <input
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              value={form.lastName}
+              onChange={(e) => handleChange("lastName", e.target.value)}
               type="text"
               placeholder="Last Name"
               className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
             />
             <div className="mt-3">
               <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={form.email}
+                onChange={(e) => handleChange("email", e.target.value)}
                 type="email"
                 placeholder="Email"
                 className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -92,15 +107,15 @@ function SignUpPage() {
             </div>
             <div className="mt-3">
               <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={form.password}
+                onChange={(e) => handleChange("password", e.target.value)}
                 type="password"
                 placeholder="Password"
                 className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
               />
               <input
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={form.confirmPassword}
+                onChange={(e) => handleChange("confirmPassword", e.target.value)}
                 type="password"
                 placeholder="Confirm password"
                 className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -108,16 +123,17 @@ function SignUpPage() {
             </div>
             <button
               type="submit"
-              className="w-full p-2 rounded-md bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold">
+              className="w-full p-2 rounded-md bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold"
+            >
               Continue
             </button>
           </form>
         </div>
         <div className="text-center mt-6">
-          <p className="text-xs text-white">
-            Already have an account?
-          </p>
-          <Link to="/" className="text-xs text-white underline">Sign in</Link>
+          <p className="text-xs text-white">Already have an account?</p>
+          <Link to="/" className="text-xs text-white underline">
+            Sign in
+          </Link>
         </div>
       </div>
     </div>
