@@ -56,7 +56,7 @@ const Homepage: React.FC = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="w-80 bg-white rounded-lg shadow-md p-4 flex flex-col items-center relative">
         <div className="w-full -mt-10 mb-4">
-          <ProfileHeader className="drop-shadow-lg w-full max-w-sm" username="Erdem" elo={1300} />
+          <ProfileHeader className="drop-shadow-lg w-full max-w-sm" username="Erdem" elo={1300} /> {/* Mijn naam moet geen hardcode zijn :( */}
         </div>
 
         <InvitePlayer
@@ -69,13 +69,13 @@ const Homepage: React.FC = () => {
 
         <div className="w-full bottom-0 flex justify-between pt-5">
           <div className="text-gray-700 text-4xl">
-            <FaChartBar /> {/* Replaced 📊 emoji with FaChartBar icon */}
+            <FaChartBar />
           </div>
           <div className="text-orange-500 text-4xl">
-            <FaHome /> {/* Replaced 🏠 emoji with FaHome icon */}
+            <FaHome />
           </div>
           <div className="text-gray-700 text-4xl">
-            <FaUser /> {/* Replaced 👤 emoji with FaUser icon */}
+            <FaUser />
           </div>
         </div>
       </div>
