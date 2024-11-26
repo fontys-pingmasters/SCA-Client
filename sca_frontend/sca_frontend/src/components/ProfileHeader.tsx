@@ -1,4 +1,5 @@
 import React from 'react';
+import LogoutButton from './LogoutButton';
 
 interface ProfileHeaderProps {
   username: string;
@@ -15,6 +16,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ username, elo, className 
         <p className="text-sm">{elo} ELO</p>
       </div>
     </div>
+    <LogoutButton />
   </div>
 );
 
