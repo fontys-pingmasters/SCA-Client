@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -22,16 +22,13 @@ function SignUpPage() {
   });
 
   const navigate = useNavigate();
-  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  const handleChange = (field: keyof UserForm, value: string) => {
-    if (debounceTimeout.current) {
-      clearTimeout(debounceTimeout.current);
-    }
-
-    debounceTimeout.current = setTimeout(() => {
-      setForm((prev) => ({ ...prev, [field]: value }));
-    }, 300);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -83,23 +80,26 @@ function SignUpPage() {
           <p className="text-sm text-gray-500 mb-4">Create your account.</p>
           <form onSubmit={handleSubmit}>
             <input
+              name="firstName"
               value={form.firstName}
-              onChange={(e) => handleChange("firstName", e.target.value)}
+              onChange={handleInputChange}
               type="text"
               placeholder="First Name"
               className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
             />
             <input
+              name="lastName"
               value={form.lastName}
-              onChange={(e) => handleChange("lastName", e.target.value)}
+              onChange={handleInputChange}
               type="text"
               placeholder="Last Name"
               className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
             />
             <div className="mt-3">
               <input
+                name="email"
                 value={form.email}
-                onChange={(e) => handleChange("email", e.target.value)}
+                onChange={handleInputChange}
                 type="email"
                 placeholder="Email"
                 className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -107,17 +107,19 @@ function SignUpPage() {
             </div>
             <div className="mt-3">
               <input
+                name="password"
                 value={form.password}
-                onChange={(e) => handleChange("password", e.target.value)}
+                onChange={handleInputChange}
                 type="password"
                 placeholder="Password"
                 className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
               />
               <input
+                name="confirmPassword"
                 value={form.confirmPassword}
-                onChange={(e) => handleChange("confirmPassword", e.target.value)}
+                onChange={handleInputChange}
                 type="password"
-                placeholder="Confirm password"
+                placeholder="Confirm Password"
                 className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
               />
             </div>
