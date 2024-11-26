@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { useAuth } from "../components/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 import mediaanConclusionLogo from '/mediaan_conclusion_logo.png';
 
@@ -14,8 +15,9 @@ function SignInPage() {
         email: "",
         password: "",
       });
-
+  
     const navigate = useNavigate();
+    const { login } = useAuth();
     const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
     const handleChange = (field: keyof SignInForm, value: string) => {
@@ -49,8 +51,7 @@ function SignInPage() {
           }
     
           const data = await response.json();
-          localStorage.setItem("token", data);
-          console.log(data);
+          login(data.token);
           toast.success("Login successful!");
           navigate("/home");
         } catch (error) {
