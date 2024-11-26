@@ -60,12 +60,11 @@ const Homepage: React.FC = () => {
         </div>
 
         <InvitePlayer
-          className="w-full max-w-sm mb-4"
           onInvite={handleInvite}
           users={users} 
         />
-        <SpectateMatches className="w-full max-w-sm mb-4" />
-        <MatchHistory className="w-full max-w-sm" matches={matches} />
+        <SpectateMatches/>
+        <MatchHistory matches={matches} />
 
         <div className="w-full bottom-0 flex justify-between pt-5">
           <div className="text-gray-700 text-4xl">
