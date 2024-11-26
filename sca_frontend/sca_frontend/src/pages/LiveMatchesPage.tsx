@@ -1,4 +1,3 @@
-// LiveMatchesPage.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsFillCircleFill } from "react-icons/bs";
