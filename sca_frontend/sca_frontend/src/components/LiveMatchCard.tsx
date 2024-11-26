@@ -2,7 +2,7 @@ import React from 'react';
 import { FaCircle } from 'react-icons/fa';
 
 interface LiveMatchCardProps {
-  player1: string; // for interface comments, see this as example, I suggest making player and score into one object if that is feasible, might be more neat
+  player1: string;
   score1: number;
   player2: string;
   score2: number;
