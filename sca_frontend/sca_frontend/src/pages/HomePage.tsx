@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FaChartBar, FaHome, FaUser } from 'react-icons/fa';
 import ProfileHeader from '../components/ProfileHeader';
 import InvitePlayer from '../components/InvitePlayer';
 import MatchHistory from '../components/MatchHistory';
@@ -13,13 +14,6 @@ const Homepage: React.FC = () => {
     { details: 'You 11 - 3 Mika', result: 'Win' as 'Win', points: 30 }, // dont forget to remove hardcode
     { details: 'You 1 - 11 Allert', result: 'Loss' as 'Loss', points: -50 }, // dont forget to remove hardcode
     { details: 'You 13 - 11 Cliff', result: 'Win' as 'Win', points: 20 }, // dont forget to remove hardcode
-  ];
-
-  const sampleUsers = [
-    { firstName: 'John', lastName: 'Smith', id: 1 }, // dont forget to remove hardcode
-    { firstName: 'Jane', lastName: 'Doe', id: 2 }, // dont forget to remove hardcode
-    { firstName: 'Sam', lastName: 'Johnson', id: 3 }, // dont forget to remove hardcode
-    { firstName: 'Chris', lastName: 'Lee', id: 4 }, // dont forget to remove hardcode
   ];
 
   useEffect(() => {
@@ -42,25 +36,19 @@ const Homepage: React.FC = () => {
   };
 
   const handleInvite = async (opponentId: number) => {
-
     try {
       const response = await fetch(
         "https://localhost:7035/Match",
         {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: `{"opponent1Id" : ${opponentId}}`, // !use proper struct instead of hardcoded quickfix
+          body: `{"opponent1Id" : ${opponentId}}`,
         }
       );
 
       if (!response.ok) throw new Error("Failed to send invite.");
     } catch (error) {
-
-    }
-
-    const invitedUser = sampleUsers.find(user => user.id === opponentId);
-    if (invitedUser) {
-      console.log(`Invited ${invitedUser.firstName} ${invitedUser.lastName}`);
+      console.log(error);
     }
   };
 
@@ -68,21 +56,26 @@ const Homepage: React.FC = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="w-80 bg-white rounded-lg shadow-md p-4 flex flex-col items-center relative">
         <div className="w-full -mt-10 mb-4">
-          <ProfileHeader className="drop-shadow-lg w-full max-w-sm" username="Erdem" elo={1300} /> {/* remove hardcode, also wrong datastructure */}
+          <ProfileHeader className="drop-shadow-lg w-full max-w-sm" username="Erdem" elo={1300} /> {/* Mijn naam moet geen hardcode zijn :( */}
         </div>
 
         <InvitePlayer
-          className="w-full max-w-sm mb-4"
           onInvite={handleInvite}
           users={users} 
         />
-        <SpectateMatches className="w-full max-w-sm mb-4" />
-        <MatchHistory className="w-full max-w-sm" matches={matches} />
+        <SpectateMatches/>
+        <MatchHistory matches={matches} />
 
         <div className="w-full bottom-0 flex justify-between pt-5">
-          <div className="text-gray-700 text-4xl">📊 {/* Use icons instead of emojis */}</div>
-          <div className="text-orange-500 text-4xl">🏠 {/* Use icons instead of emojis */}</div>
-          <div className="text-gray-700 text-4xl">👤 {/* Use icons instead of emojis */}</div>
+          <div className="text-gray-700 text-4xl">
+            <FaChartBar />
+          </div>
+          <div className="text-orange-500 text-4xl">
+            <FaHome />
+          </div>
+          <div className="text-gray-700 text-4xl">
+            <FaUser />
+          </div>
         </div>
       </div>
     </div>

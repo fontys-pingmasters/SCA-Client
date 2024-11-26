@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FaTimes } from 'react-icons/fa';
 
 const UpdateScorePage: React.FC = () => {
   const navigate = useNavigate();
-  const { matchId } = useParams<{ matchId: string }>(); // Retrieve matchId from URL parameters
+  const { matchId } = useParams<{ matchId: string }>();
   const [scorePlayer1, setScorePlayer1] = useState(0); //interface
   const [scorePlayer2, setScorePlayer2] = useState(0); //interface
   const [matchTitle, setMatchTitle] = useState(''); //interface
@@ -11,7 +14,6 @@ const UpdateScorePage: React.FC = () => {
 
   const [setMatchDetails] = useState<any>(null); //<<interface here
 
-  // Fetch match details on component mount
   useEffect(() => {
     fetchMatchDetails();
   }, [matchId]);
@@ -24,11 +26,10 @@ const UpdateScorePage: React.FC = () => {
       const data = await response.json();
       setMatchDetails(data);
 
-      // Initialize scores and other details from the fetched match details
       setScorePlayer1(data.playerScore);
       setScorePlayer2(data.opponentScore);
-      setMatchTitle(data.title); // Assuming `title` is a field in your API response
-      setCreatorId(data.creatorId); // Assuming `creatorId` is a field in your API response
+      setMatchTitle(data.title);
+      setCreatorId(data.creatorId);
     } catch (error) {
       console.error('Error fetching match details:', error);
     }
@@ -58,16 +59,17 @@ const UpdateScorePage: React.FC = () => {
         throw new Error("Failed to update match.");
       }
 
-      alert("Match updated successfully!"); // alert is a depricated function, use another print method instead, depricated functions are considered insecure
-      navigate('/live-matches'); // Navigate back to the live matches page after successful update
+      toast.success("Match updated successfully!");
+      navigate('/live-matches');
     } catch (error) {
-      alert("Failed to update match. Please try again."); // alert is a depricated function, use another print method instead, depricated functions are considered insecure
       console.error('Error updating match:', error);
+      toast.error("Failed to update match. Please try again.");
     }
   };
 
   return (
     <div className="update-score-page flex flex-col items-center justify-center h-screen p-4">
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       <div className="relative bg-gray-800 rounded-lg p-6 w-full max-w-md">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-t">
@@ -76,8 +78,8 @@ const UpdateScorePage: React.FC = () => {
           <button
             onClick={() => navigate('/live-matches')}
             className="text-red-500 hover:text-red-700"
-          > 
-            ❌ {/* Use icons instead of emojis */}
+          >
+            <FaTimes /> 
           </button>
         </div>
 

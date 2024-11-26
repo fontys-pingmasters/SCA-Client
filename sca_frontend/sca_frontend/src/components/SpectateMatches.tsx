@@ -1,18 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-interface SpectateMatchesProps {
-  className?: string; //seems weird but is correct for importing styling through page above. however, what does importing styling add in this case case? we're not making a component library
-}
-
-const SpectateMatches: React.FC<SpectateMatchesProps> = ({ className }) => {
+const SpectateMatches: React.FC = () => {
   const navigate = useNavigate();
 
   const handleViewLiveMatches = () => {
     navigate('/live-matches');
   };
+
   return (
-    <div className={`flex flex-col items-center ${className}`}>
+    <div className="flex flex-col items-center">
       <h3 className="text-lg font-bold mb-2 text-black">Spectate Matches</h3>
       <button
         onClick={handleViewLiveMatches}
