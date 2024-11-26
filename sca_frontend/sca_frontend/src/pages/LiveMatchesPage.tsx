@@ -17,7 +17,8 @@ const FormatMatchData = (playerOne:string, playerTwo:string | null, opponentOne:
     }
   }else{
     //one v one
-    {title: `${playerOne} - ${opponentOne}`, score: `${scoreOne} - ${scoreTwo}`}
+    title: `${playerOne} - ${opponentOne}`;
+    score: `${scoreOne} - ${scoreTwo}`
   }
 }
 
