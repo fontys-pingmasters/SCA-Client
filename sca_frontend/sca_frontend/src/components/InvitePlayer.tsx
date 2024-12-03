@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { IoMail } from "react-icons/io5";
 
 interface User {
   firstName: string;
@@ -78,13 +79,13 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ onInvite, users }) => {
           value={searchInput}
           onChange={handleSearchChange}
           onFocus={() => setIsDropdownActive(true)}
-          className="flex-1 p-2 rounded-l-lg border text-slate-900 border-gray-300"
+          className="flex-1 p-2 rounded-l-lg border text-gray-400"
         />
         <button
           onClick={handleInvite}
           className="bg-orange-500 text-white p-2 rounded-r-lg"
         >
-          Invite
+          <IoMail size={25} />
         </button>
 
         {isDropdownActive && filteredUsers.length > 0 && (

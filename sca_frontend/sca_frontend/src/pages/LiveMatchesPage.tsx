@@ -1,7 +1,26 @@
-// LiveMatchesPage.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsFillCircleFill } from "react-icons/bs";
+
+interface match{
+  title:string,
+  score:string
+}
+
+const FormatMatchData = (playerOne:string, playerTwo:string | null, opponentOne:string, opponentTwo:string | null, scoreOne:number, scoreTwo:number) => {
+  if(playerTwo != null){
+    if(opponentTwo != null){
+      //two v two
+
+    }else{
+      //error
+    }
+  }else{
+    //one v one
+    title: `${playerOne} - ${opponentOne}`;
+    score: `${scoreOne} - ${scoreTwo}`
+  }
+}
 
 const LiveMatchesPage: React.FC = () => {
   const navigate = useNavigate();

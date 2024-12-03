@@ -1,10 +1,11 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { FaTimes } from 'react-icons/fa';
 
 const ScoreboardPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { matchTitle, score } = location.state || { matchTitle: '', score: '' }; // good use of structures
+  const { matchTitle, score } = location.state || { matchTitle: '', score: '' };
 
   return (
     <div className="scoreboard-page flex flex-col items-center justify-center h-screen p-4">
@@ -17,7 +18,7 @@ const ScoreboardPage: React.FC = () => {
             onClick={() => navigate('/live-matches')}
             className="text-red-500 hover:text-red-700"
           >
-            ❌ {/* Use icons instead of emojis */}
+            <FaTimes />
           </button>
         </div>
         <div className="text-4xl font-bold text-center black">{score}</div>
