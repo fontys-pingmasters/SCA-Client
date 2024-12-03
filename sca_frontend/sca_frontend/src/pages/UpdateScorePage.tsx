@@ -41,11 +41,13 @@ const UpdateScorePage: React.FC = () => {
   const decrementScorePlayer2 = () => setScorePlayer2(Math.max(scorePlayer2 - 1, 0)); // what is this?
 
   const handleSubmit = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const response = await fetch("https://localhost:7035/UpdateMatch", {
-        method: "POST",
+      const response = await fetch("https://localhost:7035/Match", {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           MatchId: parseInt(matchId || '0'), // Ensure matchId is a number
