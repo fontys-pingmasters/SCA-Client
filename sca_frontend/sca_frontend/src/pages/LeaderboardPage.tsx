@@ -28,7 +28,8 @@ const LeaderboardPage = () => {
                         <h1 className="text-2xl text-black font-bold">Leaderboard</h1>
                     </div>
                 </div>
-
+                
+                {/* Top 3 Section */}
                 <div className="w-full bg-gradient-to-r from-red-500 to-orange-400 text-white rounded-lg p-4 my-4 flex justify-around">
                     {topThree.map((player, index) => (
                         <div
@@ -42,7 +43,8 @@ const LeaderboardPage = () => {
                     ))}
                 </div>
 
-                <div className="w-full divide-y divide-gray-300 text-black">
+                {/* Top 3 Section */}
+                <div className="w-full flex flex-col divide-y divide-gray-300 text-black">
                     {leaderboard.map((player) => (
                         <div
                             key={player.rank}
