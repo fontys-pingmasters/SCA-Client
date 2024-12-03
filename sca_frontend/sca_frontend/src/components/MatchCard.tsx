@@ -10,10 +10,11 @@ interface MatchCardProps {
 const MatchCard: React.FC<MatchCardProps> = ({ playerName, opponentName, playerScore, opponentScore }) => {
   return (
     <div className="flex justify-between items-center p-2 bg-black rounded">
-      <span className="text-white">{playerName}</span>
-      <span className='text-white'>{playerScore}</span>
-      <span className='text-white'>{opponentScore}</span>
-      <span className='text-white'>{opponentName}</span>
+      <span className="text-white mx-2">{playerName}</span>
+      <span className='text-white mx-2'>{playerScore}</span>
+      <span className='text-white'>-</span>
+      <span className='text-white mx-2'>{opponentScore}</span>
+      <span className='text-white mx-2'>{opponentName}</span>
       {/* <span className={points > 0 ? 'text-green-500' : 'text-red-500'}>
         {result} {points > 0 ? `+${points}` : points}
       </span> */}
