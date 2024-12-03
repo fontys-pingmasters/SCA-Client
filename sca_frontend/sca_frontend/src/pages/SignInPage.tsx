@@ -34,7 +34,7 @@ function SignInPage() {
 
   const loginRequest = async () => {
     try {
-      const response = await fetch("https://localhost:7035/Auth/login", {
+      const response = await fetch("http://localhost:5008/Auth/login", {
         method: "POST",
         headers: {
           "content-type": "application/json",

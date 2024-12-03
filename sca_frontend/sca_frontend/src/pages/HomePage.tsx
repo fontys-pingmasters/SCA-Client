@@ -22,7 +22,7 @@ const Homepage: React.FC = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("https://localhost:7035/User");
+      const response = await fetch("http://localhost:5008/User");
 
       if (!response.ok) {
         throw new Error("Failed to fetch users.");
