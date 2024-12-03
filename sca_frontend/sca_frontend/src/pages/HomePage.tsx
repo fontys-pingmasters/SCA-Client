@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { FaChartBar, FaHome, FaUser } from 'react-icons/fa';
 import ProfileHeader from '../components/ProfileHeader';
 import InvitePlayer from '../components/InvitePlayer';
@@ -7,17 +8,12 @@ import SpectateMatches from '../components/SpectateMatches';
 
 const Homepage: React.FC = () => {
   const [users, setUsers] = useState([]);
-
-  const matches = [
-    { details: 'You 11 - 5 Thomas', result: 'Win' as 'Win', points: 100 }, // dont forget to remove hardcode
-    { details: 'You 11 - 4 Sjors', result: 'Win' as 'Win', points: 50 }, // dont forget to remove hardcode
-    { details: 'You 11 - 3 Mika', result: 'Win' as 'Win', points: 30 }, // dont forget to remove hardcode
-    { details: 'You 1 - 11 Allert', result: 'Loss' as 'Loss', points: -50 }, // dont forget to remove hardcode
-    { details: 'You 13 - 11 Cliff', result: 'Win' as 'Win', points: 20 }, // dont forget to remove hardcode
-  ];
+  const [userMatches, setUserMatches] = useState([]);
+  const { matchId } = useParams<{ matchId: string }>();
 
   useEffect(() => {
     fetchUsers();
+    fetchUserMatches();
   }, []);
 
   const fetchUsers = async () => {
@@ -34,6 +30,29 @@ const Homepage: React.FC = () => {
       console.log(error);
     }
   };
+
+  const fetchUserMatches = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(`https://localhost:7035/Match/user/${matchId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+      },
+    })
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch matches.");
+      }
+
+      const data = await response.json();
+      setUserMatches(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleInvite = async (opponentId: number) => {
     try {
@@ -64,7 +83,7 @@ const Homepage: React.FC = () => {
           users={users} 
         />
         <SpectateMatches/>
-        <MatchHistory matches={matches} />
+        <MatchHistory matches={userMatches} />
 
         <div className="w-full bottom-0 flex justify-between pt-5">
           <div className="text-gray-700 text-4xl">
