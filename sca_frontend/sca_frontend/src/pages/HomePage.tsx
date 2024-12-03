@@ -11,12 +11,36 @@ const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_B
 const Homepage: React.FC = () => {
   const [users, setUsers] = useState([]);
   const [userMatches, setUserMatches] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState<{ firstName: string } | null>(null);
   const { matchId } = useParams<{ matchId: string }>();
 
   useEffect(() => {
     fetchUsers();
     fetchUserMatches();
+    fetchLoggedInUser();
   }, []);
+
+  const fetchLoggedInUser = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch("https://localhost:7035/User/Id", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch matches.");
+    }
+
+    const data = await response.json();
+    setLoggedInUser(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const fetchUsers = async () => {
     try {
@@ -77,7 +101,7 @@ const Homepage: React.FC = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="w-80 bg-white rounded-lg shadow-md p-4 flex flex-col items-center relative">
         <div className="w-full -mt-10 mb-4">
-          <ProfileHeader className="drop-shadow-lg w-full max-w-sm" username="Erdem" elo={1300} /> {/* Mijn naam moet geen hardcode zijn :( */}
+          <ProfileHeader className="drop-shadow-lg w-full max-w-sm" username={loggedInUser?.firstName} elo={1300} /> {/* Mijn naam moet geen hardcode zijn :( */}
         </div>
 
         <InvitePlayer
