@@ -12,7 +12,7 @@ interface InvitePlayerProps {
   users: User[];
 }
 
-const InvitePlayer: React.FC<InvitePlayerProps> = ({ onInvite, users }) => {
+const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ users }) => {
   const [searchInput, setSearchInput] = useState('');
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
