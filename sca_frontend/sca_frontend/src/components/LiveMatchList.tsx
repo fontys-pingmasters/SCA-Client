@@ -22,6 +22,16 @@ const LiveMatchesList: React.FC = () => {
     };
 
     useEffect(() => {
+        fetch('http://localhost:5008/match')
+            .then(response => response.json())
+            .then(result => {
+                console.log('Fetched matches:', result);
+                setMatches(result);
+            })
+            .catch(err => {
+                console.error('Error fetching matches:', err);
+            });
+            
         const connection = new HubConnectionBuilder()
             .withUrl('http://localhost:5008/matchHub')
             .withAutomaticReconnect()
@@ -29,20 +39,20 @@ const LiveMatchesList: React.FC = () => {
 
         connection.start()
             .then(() => {
-                console.log("connected to websocket");
+                console.log("Connected to Websocket");
                 connection.on('ReceiveMessage', (matches: Match[]) => {
-                    console.info(matches);
+                    console.info('Received live matches:', matches);
                     setMatches(matches);
-                })
+                });
             })
-            .catch(err => console.error(err));
+            .catch(err => console.error('Error with Websocket connection:', err));
 
         return () => {
             if (connection) {
                 connection.stop();
             }
-        }
-    }, [])
+        };
+    }, []);
 
     return (
         <div className="live-matches-page p-4">
