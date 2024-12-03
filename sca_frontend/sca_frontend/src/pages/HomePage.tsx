@@ -6,6 +6,8 @@ import InvitePlayer from '../components/InvitePlayer';
 import MatchHistory from '../components/MatchHistory';
 import SpectateMatches from '../components/SpectateMatches';
 
+const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
+
 const Homepage: React.FC = () => {
   const [users, setUsers] = useState([]);
   const [userMatches, setUserMatches] = useState([]);
@@ -18,7 +20,7 @@ const Homepage: React.FC = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("https://localhost:7035/User");
+      const response = await fetch(`${backendUrl}/User`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch users.");
@@ -34,7 +36,7 @@ const Homepage: React.FC = () => {
   const fetchUserMatches = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch(`https://localhost:7035/Match/user/${matchId}`, {
+      const response = await fetch(`${backendUrl}/Match/user/${matchId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +59,7 @@ const Homepage: React.FC = () => {
   const handleInvite = async (opponentId: number) => {
     try {
       const response = await fetch(
-        "https://localhost:7035/Match",
+        `${backendUrl}/Match`,
         {
           method: "POST",
           headers: { "content-type": "application/json" },

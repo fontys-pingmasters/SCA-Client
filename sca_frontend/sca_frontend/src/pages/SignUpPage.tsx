@@ -4,6 +4,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import mediaanConclusionLogo from '/mediaan_conclusion_logo.png';
 
+const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
+
 interface UserForm {
   email: string;
   password: string;
@@ -44,7 +46,7 @@ function SignUpPage() {
 
   const registerRequest = async () => {
     try {
-      const response = await fetch("https://localhost:7035/Auth/register", {
+      const response = await fetch(`${backendUrl}/Auth/register`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

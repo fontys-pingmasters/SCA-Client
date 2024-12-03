@@ -14,13 +14,15 @@ const UpdateScorePage: React.FC = () => {
 
   const [setMatchDetails] = useState<any>(null); //<<interface here
 
+  const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
+
   useEffect(() => {
     fetchMatchDetails();
   }, [matchId]);
 
   const fetchMatchDetails = async () => {
     try {
-      const response = await fetch(`https://localhost:7035/Match/${matchId}`);
+      const response = await fetch(`${backendUrl}/Match/${matchId}`);
       if (!response.ok) throw new Error('Failed to fetch match details.'); //catch
 
       const data = await response.json();

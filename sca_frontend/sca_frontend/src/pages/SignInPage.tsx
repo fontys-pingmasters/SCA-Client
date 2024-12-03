@@ -5,6 +5,8 @@ import { useAuth } from "../components/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 import mediaanConclusionLogo from '/mediaan_conclusion_logo.png';
 
+const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
+
 interface SignInForm {
   email: string;
   password: string;
@@ -34,7 +36,7 @@ function SignInPage() {
 
   const loginRequest = async () => {
     try {
-      const response = await fetch("https://localhost:7035/Auth/login", {
+      const response = await fetch(`${backendUrl}/Auth/login`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
