@@ -45,7 +45,7 @@ const UpdateScorePage: React.FC = () => {
   const handleSubmit = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("https://localhost:7035/Match", {
+      const response = await fetch(`${backendUrl}/Match`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

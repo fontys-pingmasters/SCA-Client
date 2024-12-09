@@ -29,7 +29,7 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
   const fetchLoggedInUser = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("https://localhost:7035/User/Id", {
+      const response = await fetch(`${backendUrl}/User/Id`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -48,8 +48,15 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
   }
 
   const fetchUsers = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const response = await fetch(`${backendUrl}/User`);
+      const response = await fetch(`${backendUrl}/User/exceptcurrent`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+      },
+    })
       console.log(response);
 
       if (!response.ok) {

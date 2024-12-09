@@ -23,7 +23,7 @@ const Homepage: React.FC = () => {
   const fetchLoggedInUser = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("https://localhost:7035/User/Id", {
+      const response = await fetch(`${backendUrl}/User/Id`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
