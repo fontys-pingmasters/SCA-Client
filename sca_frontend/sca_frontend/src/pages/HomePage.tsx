@@ -106,7 +106,6 @@ const Homepage: React.FC = () => {
 
         <InvitePlayer
           onInvite={handleInvite}
-          users={users} 
         />
         <SpectateMatches/>
         <MatchHistory matches={userMatches} />

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { IoMail } from "react-icons/io5";
 
+const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
+
 interface User {
   firstName: string;
   lastName: string;
@@ -9,15 +11,57 @@ interface User {
 
 interface InvitePlayerProps {
   onInvite: (opponentId: number) => void;
-  users: User[];
 }
 
-const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ users }) => {
+const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
   const [searchInput, setSearchInput] = useState('');
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    fetchUsers();
+    fetchLoggedInUser();
+  }, []);
+
+  const fetchLoggedInUser = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch("https://localhost:7035/User/Id", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch matches.");
+    }
+
+    const data = await response.json();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(`${backendUrl}/User`);
+      console.log(response);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch users.");
+      }
+
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
