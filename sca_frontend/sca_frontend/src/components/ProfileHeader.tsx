@@ -2,7 +2,7 @@ import React from 'react';
 import LogoutButton from './LogoutButton';
 
 interface ProfileHeaderProps {
-  username: string;
+  username: string | undefined;
   elo: number;
   className?: string; // dont import styling, were not making a component lib
 }

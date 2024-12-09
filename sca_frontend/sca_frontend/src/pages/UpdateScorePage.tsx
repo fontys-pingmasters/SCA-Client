@@ -14,13 +14,15 @@ const UpdateScorePage: React.FC = () => {
 
   const [setMatchDetails] = useState<any>(null); //<<interface here
 
+  const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
+
   useEffect(() => {
     fetchMatchDetails();
   }, [matchId]);
 
   const fetchMatchDetails = async () => {
     try {
-      const response = await fetch(`https://localhost:7035/Match/${matchId}`);
+      const response = await fetch(`${backendUrl}/Match/${matchId}`);
       if (!response.ok) throw new Error('Failed to fetch match details.'); //catch
 
       const data = await response.json();
@@ -41,11 +43,13 @@ const UpdateScorePage: React.FC = () => {
   const decrementScorePlayer2 = () => setScorePlayer2(Math.max(scorePlayer2 - 1, 0)); // what is this?
 
   const handleSubmit = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const response = await fetch("https://localhost:7035/UpdateMatch", {
-        method: "POST",
+      const response = await fetch("https://localhost:7035/Match", {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           MatchId: parseInt(matchId || '0'), // Ensure matchId is a number
