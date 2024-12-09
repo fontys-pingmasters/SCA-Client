@@ -40,8 +40,7 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
     if (!response.ok) {
       throw new Error("Failed to fetch matches.");
     }
-
-    const data = await response.json();
+    
     } catch (error) {
       console.log(error);
     }
