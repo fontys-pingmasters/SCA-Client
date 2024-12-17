@@ -14,6 +14,8 @@ const Homepage: React.FC = () => {
   const [loggedInUser, setLoggedInUser] = useState<{ firstName: string } | null>(null);
   const { matchId } = useParams<{ matchId: string }>();
 
+  console.log(users);
+
   useEffect(() => {
     fetchUsers();
     fetchUserMatches();
