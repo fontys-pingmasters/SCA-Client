@@ -61,9 +61,8 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "VITE_BACKEND_URL=${{ secrets.VITE_BACKEND_URL }}" >> ./sca_frontend/sca_frontend/.env
-          echo "VITE_BACKEND_SECURE=${{ secrets.VITE_BACKEND_SECURE }}" >> ./sca_frontend/sca_frontend/.env
-          echo "VITE_BACKEND_PORT=${{ secrets.VITE_BACKEND_PORT }}" >> ./sca_frontend/sca_frontend/.env
+          echo "SCA_TEST_URL=${{ secrets.SCA_TEST_URL }}" >> ./sca_frontend/sca_frontend/.env
+          echo "SCA_PORT=${{ secrets.SCA_PORT }}" >> ./sca_frontend/sca_frontend/.env
 
       - name: Build and push Docker image
         id: push
