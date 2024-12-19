@@ -28,9 +28,9 @@ jobs:
         id: set-env
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.perform_deploy }}" == "true" ]]; then
-            echo "Determined environment: production"
-            echo "environment=production" >> $GITHUB_ENV
-            echo "::set-output name=environment::production"
+            echo "Determined environment: latest"
+            echo "environment=latest" >> $GITHUB_ENV
+            echo "::set-output name=environment::latest"
           elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             echo "Determined environment: acceptance"
             echo "environment=acceptance" >> $GITHUB_ENV
