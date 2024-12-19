@@ -28,21 +28,26 @@ jobs:
         id: set-env
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.perform_deploy }}" == "true" ]]; then
-            echo "environment=production" >> $GITHUB_ENV
+            echo "Determined environment: Production"
+            echo "environment=Production" >> $GITHUB_ENV
             echo "::set-output name=environment::Production"
           elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "environment=acceptance" >> $GITHUB_ENV
+            echo "Determined environment: Acceptance"
+            echo "environment=Acceptance" >> $GITHUB_ENV
             echo "::set-output name=environment::Acceptance"
           elif [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
-            echo "environment=testing" >> $GITHUB_ENV
+            echo "Determined environment: Testing"
+            echo "environment=Testing" >> $GITHUB_ENV
             echo "::set-output name=environment::Testing"
           elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "Determined environment: pr-${{ github.event.number }}"
             echo "environment=pr-${{ github.event.number }}" >> $GITHUB_ENV
             echo "::set-output name=environment::pr-${{ github.event.number }}"
           else
+            echo "Determined environment: unknown"
             echo "environment=unknown" >> $GITHUB_ENV
             echo "::set-output name=environment::unknown"
-          fi
+        shell: bash
 
   build-and-push-image:
     needs: determine-environment
