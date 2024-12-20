@@ -1,7 +1,5 @@
 **/.classpath
 **/.dockerignore
-# Env needs to be included
-#**/.env
 **/.git
 **/.gitignore
 **/.project
