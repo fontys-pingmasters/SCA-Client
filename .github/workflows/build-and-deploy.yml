@@ -62,9 +62,9 @@ jobs:
             echo "environment=pr-${{ github.event.number }}" >> $GITHUB_ENV
             echo "::set-output name=environment::pr-${{ github.event.number }}"
           else
-            echo "Determined environment: unknown"
-            echo "environment=unknown" >> $GITHUB_ENV
-            echo "::set-output name=environment::unknown"
+            echo "Determined environment: pull-requests"
+            echo "environment=pull-requests" >> $GITHUB_ENV
+            echo "::set-output name=environment::pull-requests"
           fi
 
   build:
