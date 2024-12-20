@@ -1,7 +1,11 @@
 name: Build and Deploy frontend
 
 on:
+  # If: Manual trigger
+  # Do: Build ':acceptance'
   workflow_dispatch:
+    # If: Manual trigger & set to true
+    # Do: build ':latest'
     inputs:
       perform_deploy:
         required: true
@@ -11,19 +15,31 @@ on:
 
   push:
     branches:
-      - develop # For testing
-      - main    # For acceptance
+      # If: Push to develop
+      # Do: Build ':testing'
+      - develop
+      # If: Push to main
+      # Do: Build ':acceptance'
+      - main
 
   pull_request:
     branches:
-      - develop # For PR testing
+      # If: Pull request to develop
+      # Do: Build ':pr-<id>'
+      - develop
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_TAG: ${{ github.event_name == 'pull_request' && 'pr-' || '' }}${{ github.event_name == 'pull_request' && github.event.number || inputs.perform_deploy && 'latest' || github.ref == 'refs/heads/main' && 'acceptance' || github.ref == 'refs/heads/develop' && 'testing' }}
 
   KUBECTL_VERSION: 'v1.31.2'
   DEPLOY_NAMESPACE: ${{ github.event_name == 'push' && 'acceptance' || 'production' }}
 
 jobs:
   determine-environment:
-    runs-on: ubuntu-24.04s:
+    runs-on: ubuntu-24.04
+    outputs:
       environment: ${{ steps.set-env.outputs.environment }}
     steps:
       - name: Determine Environment
@@ -59,10 +75,6 @@ jobs:
       packages: write
       attestations: write
       id-token: write
-    env:
-      REGISTRY: ghcr.io
-      IMAGE_NAME: ${{ github.repository }}
-      IMAGE_TAG: ${{ needs.determine-environment.outputs.environment }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
