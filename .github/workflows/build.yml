@@ -23,27 +23,16 @@ on:
 
 jobs:
   determine-environment:
-<<<<<<< HEAD
-    runs-on: ubuntu-24.04
-=======
-    runs-on: ubuntu-latest
->>>>>>> d5117fe26f43c8690050591a4f717492701979d9
-    outputs:
+    runs-on: ubuntu-24.04s:
       environment: ${{ steps.set-env.outputs.environment }}
     steps:
       - name: Determine Environment
         id: set-env
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.perform_deploy }}" == "true" ]]; then
-<<<<<<< HEAD
             echo "Determined environment: production"
             echo "environment=production" >> $GITHUB_ENV
             echo "::set-output name=environment::production"
-=======
-            echo "Determined environment: latest"
-            echo "environment=latest" >> $GITHUB_ENV
-            echo "::set-output name=environment::latest"
->>>>>>> d5117fe26f43c8690050591a4f717492701979d9
           elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             echo "Determined environment: acceptance"
             echo "environment=acceptance" >> $GITHUB_ENV
@@ -62,11 +51,7 @@ jobs:
             echo "::set-output name=environment::unknown"
           fi
 
-<<<<<<< HEAD
   build:
-=======
-  build-and-push-image:
->>>>>>> d5117fe26f43c8690050591a4f717492701979d9
     needs: determine-environment
     runs-on: ubuntu-24.04
     permissions:
