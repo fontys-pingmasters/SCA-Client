@@ -3,8 +3,6 @@ services:
     image: ghcr.io/fontys-pingmasters/sca-client:testing
     ports:
       - "81:80"
-    environment:
-      - VITE_BACKEND_URL=http://sca-server:8080
     networks:
       - sca_network
 
