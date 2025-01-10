@@ -141,8 +141,8 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /home/ansible/compose
-            docker compose -f docker-compose.client.yml down
-            docker compose -f docker-compose.client.yml up --build -d
+            docker compose -f docker-compose.client.yml pull
+            docker compose -f docker-compose.client.yml up -d
 
   deploy-acceptance:
     runs-on: production-runner
