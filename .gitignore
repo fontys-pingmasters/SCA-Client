@@ -1,2 +1,4 @@
 
 sca_frontend/sca_frontend/.env
+package-lock.json
+node_modules/
