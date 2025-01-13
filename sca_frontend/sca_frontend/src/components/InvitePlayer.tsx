@@ -121,7 +121,6 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
 
   return (
     <div className="flex flex-col items-center dropdown-container">
-      <h3 className="text-lg font-semibold mb-2">Invite Player</h3>
       <div className="flex items-center w-full relative">
         <input
           type="text"
@@ -133,7 +132,7 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
         />
         <button
           onClick={handleInvite}
-          className="bg-orange-500 text-white p-2 rounded-r-lg"
+          className="bg-orange-500 text-white p-2 rounded-r-lg hover:opacity-80"
         >
           <IoMail size={25} />
         </button>

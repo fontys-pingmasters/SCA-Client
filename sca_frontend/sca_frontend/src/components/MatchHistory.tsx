@@ -21,7 +21,6 @@ type MatchesListProps = {
 
 const MatchesList: React.FC<MatchesListProps> = ({ matches }) => (
   <div className="flex flex-col rounded-lg p-4 bg-gray-100 shadow-lg">
-    <h3 className="text-lg font-bold text-black mb-2">Match History</h3>
     <div className="flex flex-col space-y-2">
       {matches.map((match) => (
         <MatchCard

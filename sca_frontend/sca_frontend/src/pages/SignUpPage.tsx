@@ -23,6 +23,8 @@ function SignUpPage() {
     lastName: "",
   });
 
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+
   const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +33,10 @@ function SignUpPage() {
       ...prevForm,
       [name]: value,
     }));
+  };
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsCheckboxChecked(e.target.checked);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -125,9 +131,23 @@ function SignUpPage() {
                 className="w-full p-2 mb-3 border bg-white text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
               />
             </div>
+            <div className="mb-4 flex items-center">
+              <input
+                type="checkbox"
+                id="termsCheckbox"
+                checked={isCheckboxChecked}
+                onChange={handleCheckboxChange}
+                className="mr-2 accent-gray-300 checked:accent-orange-500"
+              />
+              <label htmlFor="termsCheckbox" className="text-sm text-gray-500">
+                I understand this site is using my info and my data might be at risk.
+              </label>
+            </div>
             <button
               type="submit"
-              className="w-full p-2 rounded-md bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold"
+              className={`w-full p-2 rounded-md bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold
+                ${!isCheckboxChecked ? "opacity-50 cursor-not-allowed" : ""}`}
+              disabled={!isCheckboxChecked}
             >
               Continue
             </button>
