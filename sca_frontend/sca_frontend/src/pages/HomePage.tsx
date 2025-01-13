@@ -5,6 +5,7 @@ import ProfileHeader from '../components/ProfileHeader';
 import InvitePlayer from '../components/InvitePlayer';
 import MatchHistory from '../components/MatchHistory';
 import SpectateMatches from '../components/SpectateMatches';
+import WebSocketInviteManager from '../components/WebSocketInviteManager';
 
 const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
 
@@ -105,7 +106,7 @@ const Homepage: React.FC = () => {
         <div className="w-full -mt-10 mb-4">
           <ProfileHeader className="drop-shadow-lg w-full max-w-sm" username={loggedInUser?.firstName} elo={1300} /> {/* Mijn naam moet geen hardcode zijn :( */}
         </div>
-
+        <WebSocketInviteManager/>
         <InvitePlayer
           onInvite={handleInvite}
         />
