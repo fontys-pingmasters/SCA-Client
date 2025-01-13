@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { useNavigate } from "react-router-dom";
+import { useSignalRConnection } from "../SignalRContext";
+
+const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
 
 interface Invite {
     sender?: {
@@ -10,31 +13,36 @@ interface Invite {
 }
 
 const WebSocketInviteManager: React.FC = () => {
-    const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
+    const connection = useSignalRConnection();
     const [invite, setInvite] = useState<Invite | null>(null);
-    const [connection, setConnection] = useState<HubConnection | null>(null);
+    // const [connection, setConnection] = useState<HubConnection | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const connection = new HubConnectionBuilder()
-            .withUrl(`${backendUrl}/matchHub`)
-            .withAutomaticReconnect()
-            .build();
+        connection?.on("ReceiveMessage", (invitations: Invite[]) => {
+            if (invitations && invitations.length > 0) {
+                    setInvite(invitations[0]); // Set the latest invite
+                }
+        })
+        // const connection = new HubConnectionBuilder()
+        //     .withUrl(`${backendUrl}/matchHub`)
+        //     .withAutomaticReconnect()
+        //     .build();
 
-        connection
-            .start()
-            .then(() => {
-                console.log("Connected to WebSocket for invitations");
+        // connection
+        //     .start()
+        //     .then(() => {
+        //         console.log("Connected to WebSocket for invitations");
 
-                connection.on("ReceiveMessage", (invitations: Invite[]) => {
-                    if (invitations && invitations.length > 0) {
-                        setInvite(invitations[0]); // Set the latest invite
-                    }
-                });
+        //         connection.on("ReceiveMessage", (invitations: Invite[]) => {
+        //             if (invitations && invitations.length > 0) {
+        //                 setInvite(invitations[0]); // Set the latest invite
+        //             }
+        //         });
 
-                setConnection(connection);
-            })
-            .catch((err) => console.error("Error with WebSocket connection:", err));
+        //         setConnection(connection);
+        //     })
+        //     .catch((err) => console.error("Error with WebSocket connection:", err));
 
         return () => {
             if (connection) {

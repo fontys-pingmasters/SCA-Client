@@ -64,7 +64,7 @@ const Homepage: React.FC = () => {
   const fetchUserMatches = async () => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch(`${backendUrl}/Match/user/${matchId}`, {
+      const response = await fetch(`${backendUrl}/api/EloHistory`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +124,7 @@ const Homepage: React.FC = () => {
           </div>
           <div className='lg:w-1/3 lg:mx-auto'>
             <h3 className="text-lg font-bold text-black mt-4 mb-2">Match History</h3>
-            <MatchHistory matches={userMatches} />
+            <MatchHistory eloHistories={userMatches} />
           </div>
         </div>
         <div className="w-full lg:w-1/4 mt-auto">

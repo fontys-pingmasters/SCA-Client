@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { IoMail } from "react-icons/io5";
+import { useSignalRConnection } from "../SignalRContext";
 
 const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
 
@@ -14,6 +15,7 @@ interface InvitePlayerProps {
 }
 
 const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
+  const connection = useSignalRConnection();
   const [searchInput, setSearchInput] = useState('');
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
@@ -99,13 +101,36 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
     setIsDropdownActive(false);
   };
 
-  const handleInvite = () => {
-    if (selectedUserId !== null) {
-      console.log(`Invited player with ID: ${selectedUserId}`);
-    } else {
-      console.error("No player selected to invite.");
+  const handleInvite = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(`${backendUrl}/Match`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          opponent1Id: selectedUserId,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to send match invitation.");
+      }
+  
+      const data = await response.json(); 
+      console.log("Match invitation sent successfully:", data);
+  
+      
+      if (connection) {
+        await connection.send("ReceiveMessage", data);
+      }
+    } catch (error) {
+      console.error("Error sending match invitation:", error);
     }
   };
+  
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
