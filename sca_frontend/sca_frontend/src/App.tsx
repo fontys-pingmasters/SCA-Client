@@ -11,6 +11,7 @@ import ScoreboardPage from './pages/ScoreboardPage';
 import UpdateScorePage from './pages/UpdateScorePage';
 import { AuthProvider } from './components/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import LeaderboardPage from './pages/LeaderboardPage';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/live-matches" element={<ProtectedRoute><LiveMatchesPage /></ProtectedRoute>} />
           <Route path="/scoreboard" element={<ProtectedRoute><ScoreboardPage /></ProtectedRoute>} />
           <Route path="/update-score/:matchId" element={<ProtectedRoute><UpdateScorePage /></ProtectedRoute>} />
+          <Route path="/leaderboard" element={<ProtectedRoute><LeaderboardPage /></ProtectedRoute>} />
 
           {/* Unmatched routes */}
           <Route path="*" element={<Navigate to="/" />} />
