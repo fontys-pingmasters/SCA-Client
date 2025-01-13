@@ -1,12 +1,13 @@
 import React from 'react';
+import LogoutButton from './LogoutButton';
 
 interface ProfileHeaderProps {
-  username: string;
+  username: string | undefined;
   elo: number;
-  className?: string;
+  className?: string; // dont import styling, were not making a component lib
 }
 
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ username, elo, className }) => (
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({ username, elo, className /* dont import styling, not making a component lib */ }) => (
   <div className={`bg-gradient-to-r from-red-500 to-orange-500 text-white p-2 rounded-lg flex items-center justify-between ${className}`}>
     <div className="flex items-center">
       <div className="bg-gray-200 rounded-full w-10 h-10 mr-4"></div>
@@ -15,6 +16,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ username, elo, className 
         <p className="text-sm">{elo} ELO</p>
       </div>
     </div>
+    <LogoutButton />
   </div>
 );
 

@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { IoMail } from "react-icons/io5";
+
+const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
 
 interface User {
   firstName: string;
@@ -7,49 +10,117 @@ interface User {
 }
 
 interface InvitePlayerProps {
-  onInvite: (opponentId: number) => void;  // Expect a number (ID)
-  className?: string;
-  users: User[]; // List of users passed as props
+  onInvite: (opponentId: number) => void;
 }
 
-const InvitePlayer: React.FC<InvitePlayerProps> = ({ onInvite, className, users }) => {
+const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
   const [searchInput, setSearchInput] = useState('');
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);  // Store user ID
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [isDropdownActive, setIsDropdownActive] = useState(false);
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
 
-  // Handle input change and filter users
+  useEffect(() => {
+    fetchUsers();
+    fetchLoggedInUser();
+  }, []);
+
+  const fetchLoggedInUser = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(`${backendUrl}/User/Id`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch matches.");
+    }
+    
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const fetchUsers = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(`${backendUrl}/User/exceptcurrent`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+      },
+    })
+      console.log(response);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch users.");
+      }
+
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchInput(value);
 
-    if (value) {
-      // Filter users based on the input
-      const filtered = users.filter(
-        (user) =>
-          user.firstName.toLowerCase().includes(value.toLowerCase()) ||
-          user.lastName.toLowerCase().includes(value.toLowerCase())
-      );
-      setFilteredUsers(filtered);
-    } else {
-      setFilteredUsers([]);
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
     }
+
+    debounceTimeout.current = setTimeout(() => {
+      if (value) {
+        const filtered = users.filter(
+          (user) =>
+            user.firstName.toLowerCase().includes(value.toLowerCase()) ||
+            user.lastName.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredUsers(filtered);
+        setIsDropdownActive(true);
+      } else {
+        setFilteredUsers([]);
+        setIsDropdownActive(false);
+      }
+    }, 300);
   };
 
-  // Handle selecting a user
   const handleSelectUser = (user: User) => {
-    setSelectedUserId(user.id);  // Save the user ID instead of full name
-    setSearchInput(`${user.firstName} ${user.lastName}`); // Update the input with the full name
-    setFilteredUsers([]); // Clear the filtered list
+    setSelectedUserId(user.id);
+    setSearchInput(`${user.firstName} ${user.lastName}`);
+    setIsDropdownActive(false);
   };
 
   const handleInvite = () => {
     if (selectedUserId !== null) {
-      onInvite(selectedUserId);  // Pass the user ID to onInvite
+      console.log(`Invited player with ID: ${selectedUserId}`);
+    } else {
+      console.error("No player selected to invite.");
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".dropdown-container")) {
+        setIsDropdownActive(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
   return (
-    <div className={`flex flex-col items-center ${className}`}>
+    <div className="flex flex-col items-center dropdown-container">
       <h3 className="text-lg font-semibold mb-2">Invite Player</h3>
       <div className="flex items-center w-full relative">
         <input
@@ -57,22 +128,22 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ onInvite, className, users 
           placeholder="Search opponent"
           value={searchInput}
           onChange={handleSearchChange}
-          className="flex-1 p-2 rounded-l-lg border border-gray-300"
+          onFocus={() => setIsDropdownActive(true)}
+          className="flex-1 p-2 rounded-l-lg border text-gray-400"
         />
         <button
           onClick={handleInvite}
           className="bg-orange-500 text-white p-2 rounded-r-lg"
         >
-          📧
+          <IoMail size={25} />
         </button>
 
-        {/* Render the filtered users in a dropdown */}
-        {filteredUsers.length > 0 && (
+        {isDropdownActive && filteredUsers.length > 0 && (
           <ul className="absolute bg-gray-800 border border-gray-300 w-full mt-1 rounded-lg max-h-40 overflow-y-auto z-10">
             {filteredUsers.map((user) => (
               <li
-                key={user.id}  // Use user.id for the key
-                onClick={() => handleSelectUser(user)}  // Pass user object to handleSelectUser
+                key={user.id}
+                onClick={() => handleSelectUser(user)}
                 className="p-2 cursor-pointer hover:bg-gray-200"
               >
                 {user.firstName} {user.lastName}
