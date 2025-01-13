@@ -58,10 +58,6 @@ jobs:
             echo "environment=testing" >> $GITHUB_ENV
             echo "::set-output name=environment::testing"
           elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            echo "Determined environment: pr-${{ github.event.number }}"
-            echo "environment=pr-${{ github.event.number }}" >> $GITHUB_ENV
-            echo "::set-output name=environment::pr-${{ github.event.number }}"
-          else
             echo "Determined environment: pull-requests"
             echo "environment=pull-requests" >> $GITHUB_ENV
             echo "::set-output name=environment::pull-requests"
@@ -129,7 +125,7 @@ jobs:
 
       - name: copy paste compose file
         run: |
-          scp ./docker/dockercomposetest.yml ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/ansible/compose/
+          scp ./docker/docker-compose.client.yml ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/ansible/compose/
       
       #ssh shit
       - name: Deploy to test server
@@ -141,8 +137,8 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /home/ansible/compose
-            docker compose -f dockercomposetest.yml pull
-            docker compose -f dockercomposetest.yml up -d
+            docker compose -f docker-compose.client.yml pull
+            docker compose -f docker-compose.client.yml up -d
 
   deploy-acceptance:
     runs-on: production-runner
