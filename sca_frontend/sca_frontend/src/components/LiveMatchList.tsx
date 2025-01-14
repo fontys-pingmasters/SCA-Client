@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { BsFillCircleFill } from "react-icons/bs";
 import { HubConnectionBuilder } from '@microsoft/signalr';
 
+const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
+
 interface Match {
     player1: Player,
     player2: Player,
@@ -28,7 +30,7 @@ const LiveMatchesList: React.FC = () => {
     };
 
     useEffect(() => {
-        fetch('http://localhost:5008/match')
+        fetch(`${backendUrl}/match`)
             .then(response => response.json())
             .then(result => {
                 console.log('Fetched matches:', result);
@@ -39,7 +41,7 @@ const LiveMatchesList: React.FC = () => {
             });
             
         const connection = new HubConnectionBuilder()
-            .withUrl('http://localhost:5008/matchHub')
+            .withUrl(`${backendUrl}/matchHub`)
             .withAutomaticReconnect()
             .build();
 
@@ -61,8 +63,8 @@ const LiveMatchesList: React.FC = () => {
     }, []);
 
     return (
-        <div className="live-matches-page p-4">
-            <h1 className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-2 rounded-lg">
+        <div className="live-matches-page">
+            <h1 className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-2 rounded-lg mb-2">
                 Live Matches
             </h1>
             {matches.map((match, index) => (
