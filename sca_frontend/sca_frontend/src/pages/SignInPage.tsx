@@ -68,7 +68,7 @@ function SignInPage() {
             <img src={mediaanConclusionLogo} alt="Logo" />
           </div>
           <h2 className="text-2xl font-semibold text-black mt-2">Sign in</h2>
-          <p className="text-sm text-gray-500 mb-4">Sign in with your account. (jordy test)</p>
+          <p className="text-sm text-gray-500 mb-4">Sign in with your account.</p>
           <form onSubmit={handleSubmit}>
             <input
               name="email"
