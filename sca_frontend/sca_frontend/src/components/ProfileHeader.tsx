@@ -3,7 +3,7 @@ import LogoutButton from './LogoutButton';
 
 interface ProfileHeaderProps {
   username: string | undefined;
-  elo: number | undefined;
+  elo: number;
   className?: string; // dont import styling, were not making a component lib
 }
 

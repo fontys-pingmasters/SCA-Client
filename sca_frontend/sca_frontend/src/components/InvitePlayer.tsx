@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { IoMail } from "react-icons/io5";
-import { useSignalRConnection } from "../SignalRContext";
 
 const backendUrl = `${import.meta.env.VITE_BACKEND_URL}:${import.meta.env.VITE_BACKEND_PORT}`;
 
@@ -15,7 +14,6 @@ interface InvitePlayerProps {
 }
 
 const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
-  const connection = useSignalRConnection();
   const [searchInput, setSearchInput] = useState('');
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
@@ -101,36 +99,13 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
     setIsDropdownActive(false);
   };
 
-  const handleInvite = async () => {
-    const token = localStorage.getItem("token");
-    try {
-      const response = await fetch(`${backendUrl}/Match`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          opponent1Id: selectedUserId,
-        }),
-      });
-  
-      if (!response.ok) {
-        throw new Error("Failed to send match invitation.");
-      }
-  
-      const data = await response.json(); 
-      console.log("Match invitation sent successfully:", data);
-  
-      
-      if (connection) {
-        await connection.send("ReceiveMessage", data);
-      }
-    } catch (error) {
-      console.error("Error sending match invitation:", error);
+  const handleInvite = () => {
+    if (selectedUserId !== null) {
+      console.log(`Invited player with ID: ${selectedUserId}`);
+    } else {
+      console.error("No player selected to invite.");
     }
   };
-  
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -146,6 +121,7 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
 
   return (
     <div className="flex flex-col items-center dropdown-container">
+      <h3 className="text-lg font-semibold mb-2">Invite Player</h3>
       <div className="flex items-center w-full relative">
         <input
           type="text"
@@ -157,7 +133,7 @@ const InvitePlayer: React.FC<InvitePlayerProps> = ({ /*onInvite,*/ }) => {
         />
         <button
           onClick={handleInvite}
-          className="bg-orange-500 text-white p-2 rounded-r-lg hover:opacity-80"
+          className="bg-orange-500 text-white p-2 rounded-r-lg"
         >
           <IoMail size={25} />
         </button>

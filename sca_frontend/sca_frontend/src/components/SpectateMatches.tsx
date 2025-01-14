@@ -10,11 +10,12 @@ const SpectateMatches: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center">
+      <h3 className="text-lg font-bold mb-2 text-black">Spectate Matches</h3>
       <button
         onClick={handleViewLiveMatches}
-        className="drop-shadow-lg bg-gradient-to-r from-red-500 to-orange-500 text-white p-2 rounded-lg w-full items-center hover:opacity-80"
+        className="drop-shadow-lg bg-gradient-to-r from-red-500 to-orange-500 text-white p-2 rounded-lg w-full items-center"
       >
-        View All Live Matches
+        View Live Matches
       </button>
     </div>
   );
